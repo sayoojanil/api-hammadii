@@ -3,11 +3,11 @@ import { Entity, model, property } from '@loopback/repository';
 @model()
 export class Review extends Entity {
   @property({
-    type: 'number',
+    type: 'string',
     id: true,
     generated: true,
   })
-  id?: number;
+  id?: string;
 
   @property({
     type: 'string',
@@ -18,8 +18,6 @@ export class Review extends Entity {
   @property({
     type: 'number',
     required: true,
-    minimum: 1,
-    maximum: 5,
   })
   rating: number;
 
@@ -41,7 +39,7 @@ export class Review extends Entity {
 }
 
 export interface ReviewRelations {
-  // Define navigational properties if any
+  // describe navigational properties here
 }
 
 export type ReviewWithRelations = Review & ReviewRelations;
