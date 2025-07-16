@@ -1,4 +1,4 @@
-import {Entity, model, property} from '@loopback/repository';
+import { Entity, model, property } from '@loopback/repository';
 
 @model()
 export class Guest extends Entity {
@@ -7,7 +7,7 @@ export class Guest extends Entity {
     id: true,
     generated: true,
   })
-  id: string;
+  id?: string;
 
   @property({
     type: 'string',
@@ -27,17 +27,19 @@ export class Guest extends Entity {
   })
   email: string;
 
-  @property({
-    type: 'string',
-    required: true,
-  })
-  aadhar: string;
+  
 
   @property({
     type: 'string',
     required: true,
   })
   location: string;
+
+  @property({
+    type: 'string',
+    required: true,
+  })
+  dob: string;
 
   @property({
     type: 'string',
@@ -78,27 +80,33 @@ export class Guest extends Entity {
   @property({
     type: 'string',
     required: true,
-    default: 'monthly',
+    jsonSchema: {
+      enum: ['monthly', 'daily'],
+    },
   })
   paymentCycle: string;
 
   @property({
     type: 'number',
     required: true,
-    default: 0,
   })
   amountPaid: number;
 
   @property({
     type: 'string',
     required: true,
-    default: 'with-food',
+    jsonSchema: {
+      enum: ['with-food', 'without-food'],
+    },
   })
   foodPreference: string;
 
   @property({
     type: 'string',
     required: true,
+    jsonSchema: {
+      enum: ['joining-soon', 'currently-staying', 'already-left'],
+    },
   })
   stayStatus: string;
 
@@ -108,13 +116,25 @@ export class Guest extends Entity {
   })
   joinDate: string;
 
+  @property({
+    type: 'string',
+    required: true,
+  })
+  expectedDateFrom: string;
+
+  @property({
+    type: 'string',
+    required: true,
+  })
+  expectedDateTo: string;
+
   constructor(data?: Partial<Guest>) {
     super(data);
   }
 }
 
 export interface GuestRelations {
-  // Define navigational properties here
+  // Describe navigational properties here
 }
 
 export type GuestWithRelations = Guest & GuestRelations;
