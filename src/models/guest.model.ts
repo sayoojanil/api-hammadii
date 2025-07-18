@@ -27,7 +27,7 @@ export class Guest extends Entity {
   })
   email: string;
 
-  
+
 
   @property({
     type: 'string',
@@ -121,6 +121,12 @@ export class Guest extends Entity {
     required: true,
   })
   expectedDateFrom: string;
+
+  @property({
+    type: 'string',
+    required: true,
+  })
+  fileUrl: string;
 
   @property({
     type: 'string',

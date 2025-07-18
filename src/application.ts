@@ -5,6 +5,7 @@ import {
   RestExplorerComponent,
 } from '@loopback/rest-explorer';
 import {RepositoryMixin} from '@loopback/repository';
+import {FileUploadController} from './controllers/file-upload.controller';
 import {RestApplication} from '@loopback/rest';
 import {ServiceMixin} from '@loopback/service-proxy';
 import path from 'path';
@@ -20,6 +21,10 @@ export class NoteApplication extends BootMixin(
 
     // Set up the custom sequence
     this.sequence(MySequence);
+
+    this.controller(FileUploadController);
+
+    this.static('/uploads', path.join(__dirname, '../uploads'));
 
     // Set up default home page
     this.static('/', path.join(__dirname, '../public'));
