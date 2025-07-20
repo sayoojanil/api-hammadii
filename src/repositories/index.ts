@@ -3,3 +3,6 @@ export * from './signup.repository';
 
 export * from './Review.repository';
 export * from './guest.repository'
+
+export * from './payment.repository'
+
