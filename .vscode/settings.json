@@ -28,5 +28,6 @@
   "eslint.validate": [
     "javascript",
     "typescript"
-  ]
+  ],
+  "liveServer.settings.port": 5501
 }

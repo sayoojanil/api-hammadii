@@ -1,7 +1,7 @@
 {
-  "name": "note",
+  "name": "sayoojapi",
   "version": "0.0.1",
-  "description": "note",
+  "description": "contact me : sayoojanil977@gmail.com",
   "keywords": [
     "loopback-application",
     "loopback"
@@ -22,6 +22,7 @@
     "eslint": "lb-eslint --report-unused-disable-directives .",
     "eslint:fix": "npm run eslint -- --fix",
     "pretest": "npm run rebuild",
+    
     "test": "lb-mocha --allow-console-logs \"dist/__tests__\"",
     "posttest": "npm run lint",
     "test:dev": "lb-mocha --allow-console-logs dist/__tests__/**/*.js && npm run posttest",
@@ -62,6 +63,7 @@
     "mongodb": "^6.17.0",
     "mongoose": "^8.16.0",
     "multer": "^2.0.1",
+    "stripe": "^18.4.0",
     "tslib": "^2.0.0",
     "uuid": "^11.1.0"
   },
