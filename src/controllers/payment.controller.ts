@@ -22,6 +22,15 @@ export class PaymentController {
     return this.paymentRepository.find();
   }
 
+  @get('/payments/{id}')
+  async findPaymentById(@param.path.string('id') id: string): Promise<Payment> {
+    const payment = await this.paymentRepository.findById(id);
+    if (!payment) {
+      throw new HttpErrors.NotFound(`Payment with ID ${id} not found`);
+    }
+    return payment;
+  }
+
   @post('/add/payments')
   async createPayment(
     @requestBody({
@@ -32,7 +41,7 @@ export class PaymentController {
             properties: {
               name: { type: 'string' },
               amount: { type: 'number' },
-              status: { type: 'string', enum: ['paid', 'overdue','Awaiting_payment'] },
+              status: { type: 'string', enum: ['paid', 'overdue', 'Awaiting_payment'] },
               date: { type: 'string', format: 'date' },
               duedate: { type: 'string', format: 'date' },
               paymentMethod: { type: 'string' },
@@ -67,7 +76,7 @@ export class PaymentController {
     if (isNaN(payment.amount) || payment.amount < 0) {
       throw new HttpErrors.BadRequest('Invalid amount');
     }
-    if (!['paid', 'overdue','Awaiting_payment'].includes(payment.status)) {
+    if (!['paid', 'overdue', 'Awaiting_payment'].includes(payment.status)) {
       throw new HttpErrors.BadRequest('Invalid status');
     }
     if (isNaN(Date.parse(payment.date)) || isNaN(Date.parse(payment.duedate))) {
@@ -88,7 +97,7 @@ export class PaymentController {
             properties: {
               name: { type: 'string' },
               amount: { type: 'number' },
-              status: { type: 'string', enum: ['paid', 'overdue','Awaiting_payment'] },
+              status: { type: 'string', enum: ['paid', 'overdue', 'Awaiting_payment'] },
               date: { type: 'string', format: 'date' },
               duedate: { type: 'string', format: 'date' },
               paymentMethod: { type: 'string' },
@@ -114,7 +123,7 @@ export class PaymentController {
     if (payment.amount && (isNaN(payment.amount) || payment.amount < 0)) {
       throw new HttpErrors.BadRequest('Invalid amount');
     }
-    if (payment.status && !['paid', 'overdue','Awaiting_payment'].includes(payment.status)) {
+    if (payment.status && !['paid', 'overdue', 'Awaiting_payment'].includes(payment.status)) {
       throw new HttpErrors.BadRequest('Invalid status');
     }
     if (payment.date && isNaN(Date.parse(payment.date))) {

@@ -9,3 +9,5 @@ export * from './guest-out.repository'
 export * from './course.repository'
 
 export * from './payment.repository'
+export * from './user-profile.repository';
+export * from './post.repository';

@@ -7,6 +7,9 @@ export * from './payment.model'
 export * from './guest-out.model'
 
 export * from './course.model'
+export * from './user-profile.model';
+export * from './post.model';
+
 
 
 

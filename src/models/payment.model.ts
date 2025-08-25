@@ -25,7 +25,7 @@ export class Payment extends Entity {
     type: 'string',
     required: true,
     jsonSchema: {
-      enum: ['paid', 'overdue','Awaiting_payment'],
+      enum: ['paid', 'overdue','Awaiting_payment',],
     },
   })
   status: string;
