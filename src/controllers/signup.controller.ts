@@ -1,17 +1,12 @@
 import {repository} from '@loopback/repository';
 import {post, requestBody, HttpErrors} from '@loopback/rest';
-import {service} from '@loopback/core';
 import {User} from '../models';
 import {UserRepository} from '../repositories';
-import {ResendService} from '../services/resend.service';
 
 export class SignupController {
   constructor(
     @repository(UserRepository)
     public userRepository: UserRepository,
-
-    @service(ResendService)
-    private resendService: ResendService,
   ) {}
 
   @post('/signup')
@@ -42,10 +37,6 @@ export class SignupController {
       }
 
       const newUser = await this.userRepository.create(userData);
-
-      // ✅ Send welcome email after signup
-      await this.resendService.sendSignupEmail(newUser.email, newUser.name);
-
       return newUser;
     } catch (error) {
       console.error('Error in signup:', error);
@@ -79,9 +70,6 @@ export class SignupController {
       if (!user || user.password !== credentials.password) {
         throw new HttpErrors.Unauthorized('Invalid Credentials');
       }
-
-      // ✅ Send login notification email
-      await this.resendService.sendLoginEmail(user.email, user.name);
 
       return user;
     } catch (error) {
