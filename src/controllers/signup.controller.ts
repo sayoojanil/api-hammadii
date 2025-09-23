@@ -15,7 +15,7 @@ export class SignupController {
     this.transporter = nodemailer.createTransport({
       service: 'gmail',
       auth: {
-        user: 'sayoojanil977@gmail.com', // Replace with your email
+        user: 'sayoojanil977@gmail.com', // Replace with your email ??
         pass: 'awzz bcsc frqg uvdl',     // Replace with your app-specific password
       },
     });
