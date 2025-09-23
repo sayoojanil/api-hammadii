@@ -27,8 +27,6 @@ export class Guest extends Entity {
   })
   email: string;
 
-
-
   @property({
     type: 'string',
     required: true,
