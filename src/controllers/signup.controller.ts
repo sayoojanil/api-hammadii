@@ -15,8 +15,8 @@ export class SignupController {
     this.transporter = nodemailer.createTransport({
       service: 'gmail',
       auth: {
-        user: 'sayoojanil977@gmail.com', // Replace with your email ??
-        pass: 'awzz bcsc frqg uvdl',     // Replace with your app-specific password
+        user: 'sayoojanil977@gmail.com', // Replace with your email
+        pass: 'awzz bcsc frqg uvdl',     // Replace with your Gmail App Password
       },
     });
   }
@@ -28,11 +28,9 @@ export class SignupController {
 
     const mailOptions = {
       from: 'sayoojanil977@gmail.com', // Sender email
-      to: 'sreelakshmiprasad76@gmail.com',   // Admin email
-      // to: 'sayoojanil977@gmail.com',   // Admin email
+      to: 'sreelakshmiprasad76@gmail.com', // Admin email
       subject: `SECURITY ALERT: ${actionType} Activity Detected`,
-     // Inside sendWarningEmail() -> mailOptions.html
-html: `
+      html: `
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -46,7 +44,6 @@ html: `
       box-sizing: border-box;
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     }
-
     .container {
       max-width: 600px;
       margin: 0 auto;
@@ -54,7 +51,6 @@ html: `
       padding: 20px;
       border-radius: 15px;
     }
-
     .header {
       text-align: center;
       padding: 30px 0;
@@ -63,26 +59,22 @@ html: `
       margin-bottom: 20px;
       backdrop-filter: blur(10px);
     }
-
     .header h1 {
       color: #fff;
       font-size: 28px;
       margin-bottom: 10px;
       text-shadow: 2px 2px 6px rgba(0,0,0,0.4);
     }
-
     .header .icon {
       font-size: 45px;
       margin-bottom: 15px;
     }
-
     .content {
       background: white;
       padding: 30px;
       border-radius: 10px;
       box-shadow: 0 10px 30px rgba(255,0,0,0.3);
     }
-
     .alert-banner {
       background: linear-gradient(45deg, #ff1a1a, #b30000);
       color: white;
@@ -95,7 +87,6 @@ html: `
       text-transform: uppercase;
       box-shadow: 0 4px 12px rgba(179,0,0,0.4);
     }
-
     .details-card {
       background: #fff5f5;
       border-left: 4px solid #ff4d4d;
@@ -103,7 +94,6 @@ html: `
       border-radius: 8px;
       margin-bottom: 25px;
     }
-
     .detail-item {
       display: flex;
       justify-content: space-between;
@@ -111,17 +101,14 @@ html: `
       padding-bottom: 10px;
       border-bottom: 1px solid #f1c0c0;
     }
-
     .detail-label {
       font-weight: 600;
       color: #8b0000;
     }
-
     .detail-value {
       color: #212529;
       font-weight: 500;
     }
-
     .action-section {
       background: #ffe6e6;
       border: 1px solid #ffcccc;
@@ -129,32 +116,27 @@ html: `
       padding: 20px;
       margin: 25px 0;
     }
-
     .action-title {
       color: #a30000;
       font-weight: bold;
       margin-bottom: 15px;
       font-size: 16px;
     }
-
     .action-steps {
       list-style: none;
       padding-left: 0;
     }
-
     .action-steps li {
       padding: 8px 0;
       padding-left: 25px;
       position: relative;
       color: #a30000;
     }
-
     .action-steps li:before {
       content: "⚠️";
       position: absolute;
       left: 0;
     }
-
     .footer {
       text-align: center;
       margin-top: 30px;
@@ -163,14 +145,12 @@ html: `
       color: #8b0000;
       font-size: 14px;
     }
-
     .logo {
       color: #b30000;
       font-weight: bold;
       font-size: 18px;
       margin-bottom: 10px;
     }
-
     .urgency-badge {
       display: inline-block;
       background: #b30000;
@@ -190,22 +170,18 @@ html: `
       <h1>Security Alert Notification</h1>
       <p style="color: rgba(255,255,255,0.85);">Shyamaprabha Admin Security System</p>
     </div>
-
     <div class="content">
       <div class="alert-banner">
         ⚠️ ${actionType} ACTIVITY DETECTED
         <span class="urgency-badge">HIGH PRIORITY</span>
       </div>
-
       <p style="color: #333; line-height: 1.6; margin-bottom: 20px;">
         Dear <strong>Admin</strong>,
       </p>
-
       <p style="color: #333; line-height: 1.6; margin-bottom: 20px;">
         This is an automated security notification from the <strong>Shyamaprabha Admin System</strong>.
         A recent <strong>${actionType}</strong> attempt has been detected and requires your attention.
       </p>
-
       <div class="details-card">
         <h3 style="color: #a30000; margin-bottom: 15px;">📋 Activity Details</h3>
         <div class="detail-item">
@@ -225,7 +201,6 @@ html: `
           <span class="detail-value" style="color: #28a745; font-weight: bold;">Completed Successfully</span>
         </div>
       </div>
-
       <div class="action-section">
         <div class="action-title">🚨 Required Actions</div>
         <p style="color: #a30000; margin-bottom: 15px;">
@@ -239,11 +214,9 @@ html: `
           <li>Check for any suspicious system activities</li>
         </ul>
       </div>
-
       <p style="color: #333; line-height: 1.6; margin-bottom: 20px;">
         Your prompt attention to this matter will help ensure the continued security of your system.
       </p>
-
       <div class="footer">
         <div class="logo">Shyamaprabha Admin Security System</div>
         <p>This is an automated message. Please do not reply to this email.</p>
@@ -255,15 +228,15 @@ html: `
   </div>
 </body>
 </html>
-`,
-
+      `,
     };
 
     try {
       await this.transporter.sendMail(mailOptions);
       console.log(`✅ Stylish warning email sent for ${action} to admin`);
-    } catch (error) {
-      console.error('❌ Error sending warning email:', error);
+    } catch (error: any) {
+      console.error('❌ Error sending warning email:', error.message);
+      // Don't rethrow — prevents server crash & 502
     }
   }
 
