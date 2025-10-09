@@ -22,6 +22,18 @@ export class Post extends Entity {
   })
   body: string;
 
+  @property({
+    type: 'string',
+    required: true,
+  })
+  author: string;
+
+  @property({
+    type: 'string',
+    required: true,
+  })
+  content: string;
+
 
   @property({
     type: 'string',

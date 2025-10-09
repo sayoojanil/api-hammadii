@@ -1,4 +1,3 @@
-// src/controllers/post.controller.ts
 import {
   Count,
   CountSchema,
@@ -24,7 +23,7 @@ import {PostRepository} from '../repositories';
 export class PostController {
   constructor(
     @repository(PostRepository)
-    public postRepository : PostRepository,
+    public postRepository: PostRepository,
   ) {}
 
   @post('add/posts')
@@ -64,4 +63,21 @@ export class PostController {
   ): Promise<Post[]> {
     return this.postRepository.find(filter);
   }
+
+  // ✅ Get post by ID
+@get('get/posts/{id}')
+@response(200, {
+  description: 'Post model instance by ID',
+  content: {
+    'application/json': {
+      schema: getModelSchemaRef(Post, {includeRelations: true}),
+    },
+  },
+})
+async findById(
+  @param.path.string('id') id: string, // ✅ use string if your Post model id is string type (MongoDB)
+): Promise<Post> {
+  return this.postRepository.findById(id);
+}
+
 }
