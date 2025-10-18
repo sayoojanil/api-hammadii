@@ -1,5 +1,11 @@
 import {repository} from '@loopback/repository';
-import {get, post, param, requestBody, getModelSchemaRef} from '@loopback/rest';
+import {
+  get,
+  post,
+  param,
+  requestBody,
+  response,
+} from '@loopback/rest';
 import {Comment} from '../models';
 import {CommentRepository} from '../repositories';
 
@@ -9,22 +15,46 @@ export class CommentController {
     public commentRepository: CommentRepository,
   ) {}
 
-  /**
-   * ✅ Get all comments for a given post ID
-   * Endpoint: GET /get/comments/{postId}
-   */
-  @get('/get/comments/{postId}', {
-    responses: {
-      '200': {
-        description: 'Array of Comments for the given postId',
-        content: {
-          'application/json': {
-            schema: {
-              type: 'array',
-              items: getModelSchemaRef(Comment, {includeRelations: true}),
+  // ✅ Add a new comment
+  @post('/add/comment')
+  @response(200, {
+    description: 'Add a new comment',
+    content: {'application/json': {schema: {'x-ts-type': Comment}}},
+  })
+  async addComment(
+    @requestBody({
+      content: {
+        'application/json': {
+          schema: {
+            type: 'object',
+            required: ['postId', 'username', 'text'],
+            properties: {
+              postId: {type: 'string'},
+              username: {type: 'string'},
+              text: {type: 'string'},
             },
           },
         },
+      },
+    })
+    data: {postId: string; username: string; text: string},
+  ): Promise<Comment> {
+    const newComment = await this.commentRepository.create({
+      postId: data.postId,
+      username: data.username,
+      text: data.text,
+      createdAt: new Date(),
+    });
+    return newComment;
+  }
+
+  // ✅ Get all comments for a post
+  @get('/get/comments/{postId}')
+  @response(200, {
+    description: 'Array of Comments for a specific post',
+    content: {
+      'application/json': {
+        schema: {type: 'array', items: {'x-ts-type': Comment}},
       },
     },
   })
@@ -37,28 +67,13 @@ export class CommentController {
     });
   }
 
-  /**
-   * ✅ Create a new comment
-   * Endpoint: POST /add/comment
-   */
-  @post('/add/comment', {
-    responses: {
-      '200': {
-        description: 'Comment model instance',
-        content: {'application/json': {schema: getModelSchemaRef(Comment)}},
-      },
-    },
+  // (Optional) ✅ Get all comments (admin/debug)
+  @get('/get/comments')
+  @response(200, {
+    description: 'Get all comments',
+    content: {'application/json': {schema: {type: 'array', items: {'x-ts-type': Comment}}}},
   })
-  async createComment(
-    @requestBody({
-      content: {
-        'application/json': {
-          schema: getModelSchemaRef(Comment, {exclude: ['id']}),
-        },
-      },
-    })
-    commentData: Omit<Comment, 'id'>,
-  ): Promise<Comment> {
-    return this.commentRepository.create(commentData);
+  async findAll(): Promise<Comment[]> {
+    return this.commentRepository.find({order: ['createdAt DESC']});
   }
 }

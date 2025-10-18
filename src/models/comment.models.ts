@@ -1,9 +1,7 @@
 import {Entity, model, property} from '@loopback/repository';
 
 @model({
-  settings: {
-    mongodb: {collection: 'comments'}, // 👈 change collection name here
-  },
+  name: 'comments' // MongoDB collection name
 })
 export class Comment extends Entity {
   @property({
@@ -17,7 +15,7 @@ export class Comment extends Entity {
     type: 'string',
     required: true,
   })
-  postId: string; // The blog post this comment belongs to
+  postId: string; // Blog post ID
 
   @property({
     type: 'string',
@@ -35,7 +33,7 @@ export class Comment extends Entity {
     type: 'date',
     default: () => new Date(),
   })
-  createdAt?: string;
+  createdAt?: Date;
 
   constructor(data?: Partial<Comment>) {
     super(data);
@@ -43,7 +41,7 @@ export class Comment extends Entity {
 }
 
 export interface CommentRelations {
-  // Define navigational properties here (if any)
+  // describe navigational properties here if needed
 }
 
 export type CommentWithRelations = Comment & CommentRelations;
