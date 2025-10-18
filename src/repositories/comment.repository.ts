@@ -7,6 +7,7 @@ export class CommentRepository extends DefaultCrudRepository<
   Comment,
   typeof Comment.prototype.id,
   CommentRelations
+  // ;as;
 > {
   constructor(@inject('datasources.mongodb') dataSource: MongodbDataSource) {
     super(Comment, dataSource);

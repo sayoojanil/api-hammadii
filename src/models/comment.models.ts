@@ -1,7 +1,9 @@
 import {Entity, model, property} from '@loopback/repository';
 
 @model({
-  settings: {strict: true},
+  settings: {
+    mongodb: {collection: 'comments'}, // 👈 change collection name here
+  },
 })
 export class Comment extends Entity {
   @property({
