@@ -78,7 +78,7 @@ export class SignupController {
       },
     })
     userData: Omit<User, 'id'>,
-  ): Promise<{message: string; token: string}> {
+  ): Promise<{message: string; token: string; name: string; email: string}> {
     try {
       const existing = await this.userRepository.findOne({
         where: {email: userData.email},
@@ -92,8 +92,13 @@ export class SignupController {
 
       this.sendWarningEmail('signup', userData.email).catch(console.error);
 
-      //  Return only token with success message
-      return {message: 'success', token};
+      // ✅ Include name and email in response
+      return {
+        message: 'success',
+        token,
+        name: newUser.name,
+        email: newUser.email,
+      };
     } catch (error) {
       console.error('Error in signup:', error);
       throw error;
@@ -118,7 +123,7 @@ export class SignupController {
       },
     })
     credentials: {email: string; password: string},
-  ): Promise<{message: string; token: string}> {
+  ): Promise<{message: string; token: string; name: string; email: string}> {
     try {
       const user = await this.userRepository.findOne({
         where: {email: credentials.email},
@@ -132,7 +137,13 @@ export class SignupController {
 
       this.sendWarningEmail('login', credentials.email).catch(console.error);
 
-      return {message: 'success', token};
+      // ✅ Include name and email in response
+      return {
+        message: 'success',
+        token,
+        name: user.name,
+        email: user.email,
+      };
     } catch (error) {
       console.error('Error in login:', error);
       throw error;
